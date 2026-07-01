@@ -10,43 +10,57 @@
 <style>
   :root{--serif:"Cormorant Garamond",Georgia,serif;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--ink:#1c1c1c;--muted:#7a7a7a;--line:#ececec;--gold:#c9a24b;--bg:#faf9f7}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:var(--sans);color:var(--ink);background:var(--bg)}
-  img{display:block;width:100%;height:100%;object-fit:cover}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);padding-bottom:96px}
   a{text-decoration:none;color:inherit}
-  header{position:sticky;top:0;z-index:20;background:rgba(250,249,247,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 24px}
-  .logo{font-family:var(--serif);font-size:22px;font-weight:600}
-  .logo span{color:var(--gold)}
+  header{position:sticky;top:0;z-index:20;background:rgba(250,249,247,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 24px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:600}.logo span{color:var(--gold)}
   .links{display:flex;gap:26px}
   .links a{font-size:13.5px;color:#555;padding-bottom:3px;border-bottom:2px solid transparent;transition:.15s}
-  .links a:hover{color:var(--ink)}
-  .links a.on{color:var(--ink);border-color:var(--gold);font-weight:500}
+  .links a:hover{color:var(--ink)}.links a.on{color:var(--ink);border-color:var(--gold);font-weight:500}
   .menu-btn{display:none;background:none;border:0;font-size:22px;cursor:pointer}
   @media(max-width:720px){.links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:#fff;border-bottom:1px solid var(--line)}.links.open{display:flex}.links a{padding:14px 24px;border-bottom:1px solid var(--line)}.menu-btn{display:block}}
 
-  .intro{max-width:900px;margin:0 auto;padding:46px 24px 8px}
+  .intro{max-width:1000px;margin:0 auto;padding:44px 24px 6px}
   .intro .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
   .intro h1{font-family:var(--serif);font-size:clamp(34px,5vw,46px);font-weight:600;margin:8px 0 6px}
-  .intro p{color:var(--muted);font-size:15px;max-width:560px}
+  .intro p{color:var(--muted);font-size:15px;max-width:600px}
 
-  .list{max-width:900px;margin:0 auto;padding:24px 24px 60px;display:flex;flex-direction:column;gap:12px}
-  .track{display:flex;align-items:center;gap:16px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:0 4px 14px rgba(0,0,0,.04);transition:.15s}
-  .track:hover{box-shadow:0 10px 26px rgba(0,0,0,.08)}
-  .track.playing{border-color:var(--gold)}
-  .art{width:60px;height:60px;border-radius:10px;overflow:hidden;flex:none;background:linear-gradient(135deg,#e9e2cf,#c9a24b)}
-  .play{width:44px;height:44px;flex:none;border-radius:50%;border:0;background:var(--ink);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
-  .play:hover{background:var(--gold);color:#1a1400}
+  .section{max-width:1000px;margin:0 auto;padding:22px 24px 8px}
+  .section h2{font-family:var(--serif);font-size:26px;font-weight:600;display:flex;align-items:baseline;gap:12px}
+  .section h2 .count{font-family:var(--sans);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .section .divider{height:1px;background:var(--line);margin:14px 0 4px}
+
+  .list{max-width:1000px;margin:0 auto;padding:6px 24px 18px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:680px){.list{grid-template-columns:1fr}}
+  .track{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;transition:.15s;cursor:pointer}
+  .track:hover{box-shadow:0 8px 22px rgba(0,0,0,.07)}
+  .track.playing{border-color:var(--gold);box-shadow:0 8px 22px rgba(201,162,75,.18)}
+  .play{width:40px;height:40px;flex:none;border-radius:50%;border:0;background:var(--ink);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+  .track:hover .play{background:var(--gold);color:#1a1400}
+  .track.playing .play{background:var(--gold);color:#1a1400}
   .info{flex:1;min-width:0}
-  .info h3{font-family:var(--serif);font-size:19px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .info .meta{color:var(--muted);font-size:12.5px;margin-top:2px}
-  .info .bar{margin-top:9px;height:4px;background:#eee;border-radius:3px;overflow:hidden}
-  .info .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .2s linear}
-  .time{font-size:12px;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
-  .note{max-width:900px;margin:0 auto 50px;padding:0 24px;color:var(--muted);font-size:13px}
-  .note code{background:#f0efe9;padding:2px 6px;border-radius:5px;font-size:12px}
+  .info h3{font-family:var(--serif);font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+  .info .bar{margin-top:7px;height:3px;background:#eee;border-radius:3px;overflow:hidden}
+  .info .bar i{display:block;height:100%;width:0;background:var(--gold)}
+  .dur{font-size:12px;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+
+  /* sticky now-playing bar */
+  .now{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(28,28,28,.96);backdrop-filter:blur(10px);color:#fff;transform:translateY(110%);transition:transform .35s ease}
+  .now.show{transform:none}
+  .now .in{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 24px}
+  .now .np{width:40px;height:40px;border-radius:50%;border:0;background:var(--gold);color:#1a1400;font-size:15px;cursor:pointer;flex:none}
+  .now .meta{flex:none;min-width:150px;max-width:34%;overflow:hidden}
+  .now .meta .t{font-family:var(--serif);font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .now .meta .s{font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.55}
+  .now .scrub{flex:1;display:flex;align-items:center;gap:10px}
+  .now .scrub .t{font-size:11px;opacity:.7;font-variant-numeric:tabular-nums;min-width:34px}
+  .now .track-bar{flex:1;height:5px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;cursor:pointer}
+  .now .track-bar i{display:block;height:100%;width:0;background:var(--gold)}
+  @media(max-width:680px){.now .meta{max-width:44%}.now .scrub .t:last-child{display:none}}
 
   footer{border-top:1px solid var(--line);background:#fff}
-  .foot{max-width:1140px;margin:0 auto;padding:30px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .foot{max-width:1000px;margin:0 auto;padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
   .foot .c{color:var(--muted);font-size:12.5px}
   .foot a.prop{font-size:12.5px;color:#555;border:1px solid var(--line);padding:8px 14px;border-radius:999px;transition:.15s}
   .foot a.prop:hover{border-color:var(--gold);color:var(--ink)}
@@ -64,94 +78,118 @@
       <a href="songs.html" class="on">Songs</a>
       <a href="memories.html">Memories</a>
     </nav>
-    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
   </div>
 </header>
 
 <section class="intro">
   <div class="eyebrow">Our Music</div>
   <h1>Family songs</h1>
-  <p>Original songs made for and about our family. Press play and turn it up.</p>
+  <p>Original AI-made songs written for and about our family &mdash; birthdays, tributes, and songs of faith. Press play on any track.</p>
 </section>
 
-<main class="list" id="list"></main>
-
-<p class="note" id="note">To add songs, drop audio files in a <code>music/</code> folder next to this page and list them below (filename, title, and a short note). Any track whose file isn’t found yet will show as “coming soon.”</p>
+<div id="sections"></div>
 
 <footer>
   <div class="foot">
-    <div class="c">© 2026 The Burmeister Family · burmeisters.com</div>
-    <a class="prop" href="https://gburmster.wixsite.com/burmeister-property" target="_blank" rel="noopener">Also from the family — Burmeister Properties →</a>
+    <div class="c">&copy; 2026 The Burmeister Family &middot; burmeisters.com</div>
+    <a class="prop" href="https://gburmster.wixsite.com/burmeister-property" target="_blank" rel="noopener">Also from the family &mdash; Burmeister Properties &rarr;</a>
   </div>
 </footer>
 
+<!-- Now playing bar -->
+<div class="now" id="now">
+  <div class="in">
+    <button class="np" id="npBtn" aria-label="Play/Pause">&#10074;&#10074;</button>
+    <div class="meta"><div class="t" id="npTitle">&mdash;</div><div class="s" id="npSection"></div></div>
+    <div class="scrub">
+      <span class="t" id="npCur">0:00</span>
+      <div class="track-bar" id="npBar"><i></i></div>
+      <span class="t" id="npDur">0:00</span>
+    </div>
+  </div>
+</div>
+
+<script src="music/songs.js"></script>
 <script>
   document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('links').classList.toggle('open'));
 
-  /* Edit this list with your AI-generated songs.
-     file: put the mp3 in a /music folder next to this page. */
-  const songs = [
-    {title:'Burmeister Family Anthem', meta:'AI original · 2026',       file:'music/anthem.mp3',     art:'photos/albums/portrait.jpg'},
-    {title:'Home on the Prairie',      meta:'AI original · country',     file:'music/prairie.mp3',    art:'https://picsum.photos/seed/song2/120/120'},
-    {title:'Together',                 meta:'AI original · acoustic',    file:'music/together.mp3',   art:'https://picsum.photos/seed/song3/120/120'},
-    {title:'Golden Hour',              meta:'AI original · folk',        file:'music/goldenhour.mp3', art:'https://picsum.photos/seed/song4/120/120'},
+  const SECTIONS = [
+    {key:'family', label:'Family & Personal'},
+    {key:'faith',  label:'Faith & Worship'}
   ];
+  const fmt = s => isFinite(s)&&s>0 ? `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}` : '0:00';
 
-  const list = document.getElementById('list');
+  const songs = (window.SONGS||[]);
+  const host = document.getElementById('sections');
+  const rowByIndex = [];
+
+  songs.forEach((s,i)=> s._i = i);
+
+  SECTIONS.forEach(sec=>{
+    const items = songs.filter(s=>s.section===sec.key);
+    if(!items.length) return;
+    const wrap = document.createElement('div');
+    wrap.className='section';
+    wrap.innerHTML = `<h2>${sec.label} <span class="count">${items.length} songs</span></h2><div class="divider"></div>`;
+    const list = document.createElement('div'); list.className='list';
+    items.forEach(s=>{
+      const row = document.createElement('div');
+      row.className='track'; row.dataset.i=s._i;
+      row.innerHTML = `
+        <button class="play" aria-label="Play">&#9654;</button>
+        <div class="info"><h3>${s.title}</h3><div class="bar"><i></i></div></div>
+        <div class="dur">${fmt(s.dur)}</div>`;
+      row.addEventListener('click',()=>toggle(s._i));
+      list.appendChild(row);
+      rowByIndex[s._i]=row;
+    });
+    wrap.appendChild(list); host.appendChild(wrap);
+  });
+
+  // Player
   const audio = new Audio();
-  let current = -1;
+  let cur = -1;
+  const now = document.getElementById('now');
+  const npBtn=document.getElementById('npBtn'), npTitle=document.getElementById('npTitle'),
+        npSection=document.getElementById('npSection'), npCur=document.getElementById('npCur'),
+        npDur=document.getElementById('npDur'), npBar=document.getElementById('npBar');
 
-  const fmt = s => isFinite(s) ? `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}` : '–:--';
-
-  songs.forEach((s,i)=>{
-    const row = document.createElement('div');
-    row.className='track';
-    row.innerHTML = `
-      <div class="art"><img alt=""></div>
-      <button class="play" data-i="${i}" aria-label="Play">▶</button>
-      <div class="info">
-        <h3>${s.title}</h3>
-        <div class="meta">${s.meta}</div>
-        <div class="bar"><i></i></div>
-      </div>
-      <div class="time">–:--</div>`;
-    // art with fallback
-    const img = row.querySelector('.art img');
-    const probe = new Image();
-    probe.onload=()=>img.src=s.art; probe.onerror=()=>img.style.display='none';
-    probe.src=s.art;
-    list.appendChild(row);
-  });
-
-  const rows = [...document.querySelectorAll('.track')];
-  const btns = [...document.querySelectorAll('.play')];
-
-  function playIndex(i){
-    if(current===i){ if(audio.paused){audio.play();}else{audio.pause();} return; }
-    current=i;
-    audio.src=songs[i].file;
-    audio.play().catch(()=>{}); // if file missing, error handler flags it
-    rows.forEach((r,idx)=>r.classList.toggle('playing', idx===i));
-    btns.forEach((b,idx)=>b.textContent = idx===i ? '❚❚' : '▶');
+  function toggle(i){
+    if(cur===i){ audio.paused?audio.play():audio.pause(); return; }
+    cur=i; const s=songs[i];
+    audio.src=s.file; audio.play().catch(()=>{});
+    rowByIndex.forEach((r,idx)=>r&&r.classList.toggle('playing',idx===i));
+    npTitle.textContent=s.title;
+    npSection.textContent=(SECTIONS.find(x=>x.key===s.section)||{}).label||'';
+    npDur.textContent=fmt(s.dur);
+    now.classList.add('show');
   }
-
-  btns.forEach(b=> b.addEventListener('click',()=>playIndex(+b.dataset.i)));
-
-  audio.addEventListener('timeupdate',()=>{
-    if(current<0) return;
-    const pct = audio.duration ? (audio.currentTime/audio.duration*100) : 0;
-    rows[current].querySelector('.bar i').style.width = pct+'%';
-    rows[current].querySelector('.time').textContent = fmt(audio.currentTime)+' / '+fmt(audio.duration);
+  npBtn.addEventListener('click',()=>{ if(cur<0)return; audio.paused?audio.play():audio.pause(); });
+  document.getElementById('npBar').addEventListener('click',e=>{
+    if(!audio.duration)return; const r=e.currentTarget.getBoundingClientRect();
+    audio.currentTime=((e.clientX-r.left)/r.width)*audio.duration;
   });
-  audio.addEventListener('play', ()=>{ if(current>=0) btns[current].textContent='❚❚'; });
-  audio.addEventListener('pause',()=>{ if(current>=0) btns[current].textContent='▶'; });
-  audio.addEventListener('ended',()=>{ if(current>=0){btns[current].textContent='▶'; rows[current].querySelector('.bar i').style.width='0%';} });
-  audio.addEventListener('error',()=>{
-    if(current<0) return;
-    rows[current].querySelector('.meta').textContent = songs[current].meta + ' · (add file to /music)';
-    rows[current].querySelector('.time').textContent = 'coming soon';
-    rows[current].classList.remove('playing');
-    btns[current].textContent='▶';
+
+  function setPlayIcons(playing){
+    npBtn.innerHTML = playing ? '&#10074;&#10074;' : '&#9654;';
+    rowByIndex.forEach((r,idx)=>{ if(r){ const b=r.querySelector('.play'); b.innerHTML = (idx===cur&&playing)?'&#10074;&#10074;':'&#9654;'; }});
+  }
+  audio.addEventListener('play',()=>setPlayIcons(true));
+  audio.addEventListener('pause',()=>setPlayIcons(false));
+  audio.addEventListener('timeupdate',()=>{
+    if(cur<0)return;
+    const pct=audio.duration?audio.currentTime/audio.duration*100:0;
+    npBar.querySelector('i').style.width=pct+'%';
+    const rb=rowByIndex[cur].querySelector('.bar i'); if(rb) rb.style.width=pct+'%';
+    npCur.textContent=fmt(audio.currentTime);
+    if(audio.duration) npDur.textContent=fmt(audio.duration);
+  });
+  audio.addEventListener('ended',()=>{
+    const order=songs.map(s=>s._i);
+    const pos=order.indexOf(cur);
+    if(pos>-1 && pos+1<order.length){ toggle(order[pos+1]); } // autoplay next
+    else { setPlayIcons(false); }
   });
 </script>
 </body>
