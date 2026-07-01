@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Burmeister Properties — Castle Rock, Colorado</title>
+<meta name="description" content="Undeveloped commercial land in Castle Rock, Colorado at the Plum Creek / Interstate 25 interchange. Available for hotel, restaurant, and commercial use.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--serif:"Cormorant Garamond",Georgia,serif;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--ink:#1c1c1c;--muted:#7a7a7a;--line:#ececec;--gold:#c9a24b;--bg:#faf9f7;--dark:#141a17}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg)}
+  img{display:block;max-width:100%}
+  a{text-decoration:none;color:inherit}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(250,249,247,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 24px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:600}.logo span{color:var(--gold)}
+  .links{display:flex;gap:26px}
+  .links a{font-size:13.5px;color:#555;padding-bottom:3px;border-bottom:2px solid transparent;transition:.15s}
+  .links a:hover{color:var(--ink)}.links a.on{color:var(--ink);border-color:var(--gold);font-weight:500}
+  .menu-btn{display:none;background:none;border:0;font-size:22px;cursor:pointer}
+  @media(max-width:760px){.links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:#fff;border-bottom:1px solid var(--line)}.links.open{display:flex}.links a{padding:14px 24px;border-bottom:1px solid var(--line)}.menu-btn{display:block}}
+
+  /* Hero */
+  .hero{position:relative;min-height:460px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;overflow:hidden}
+  .hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero .ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,12,.55),rgba(10,14,12,.35) 40%,rgba(10,14,12,.7))}
+  .hero .in{position:relative;z-index:2;padding:70px 24px;max-width:820px}
+  .hero .eyebrow{letter-spacing:.28em;text-transform:uppercase;font-size:12px;color:var(--gold);font-weight:600}
+  .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(40px,7vw,72px);line-height:1.02;margin:14px 0 10px;letter-spacing:.01em;text-shadow:0 2px 30px rgba(0,0,0,.4)}
+  .hero .lede{font-family:var(--serif);font-size:clamp(18px,2.6vw,24px);font-style:italic;opacity:.95}
+  .hero .loc{margin-top:20px;display:inline-flex;gap:10px;align-items:center;font-size:13.5px;letter-spacing:.04em;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);padding:9px 16px;border-radius:999px;backdrop-filter:blur(4px)}
+
+  /* Stats */
+  .stats{max-width:1100px;margin:0 auto;padding:0 24px;transform:translateY(-34px)}
+  .stats .grid{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.08);display:grid;grid-template-columns:repeat(4,1fr)}
+  .stats .cell{padding:22px 18px;text-align:center;border-right:1px solid var(--line)}
+  .stats .cell:last-child{border-right:0}
+  .stats .n{font-family:var(--serif);font-size:34px;font-weight:600;color:var(--ink);line-height:1}
+  .stats .n b{color:var(--gold);font-weight:600}
+  .stats .l{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+  @media(max-width:680px){.stats .grid{grid-template-columns:repeat(2,1fr)}.stats .cell:nth-child(2){border-right:0}.stats .cell:nth-child(1),.stats .cell:nth-child(2){border-bottom:1px solid var(--line)}}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+  section.block{padding:34px 0}
+  .eyebrow2{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  h2.big{font-family:var(--serif);font-size:clamp(30px,4.5vw,42px);font-weight:600;margin:8px 0 4px;letter-spacing:.01em}
+  .sub{color:var(--muted);font-size:16px;margin-bottom:8px}
+  .prose{max-width:760px;color:#3d3d3d;font-size:16px;line-height:1.75}
+  .prose p{margin-top:14px}
+
+  /* Gallery */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  @media(max-width:680px){.gallery{grid-template-columns:1fr 1fr}}
+  .gallery .g{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:3/2;cursor:pointer;background:#eee}
+  .gallery .g img{width:100%;height:100%;object-fit:cover;transition:.4s}
+  .gallery .g:hover img{transform:scale(1.05)}
+  .feature-img{border-radius:16px;overflow:hidden;margin-top:8px;aspect-ratio:16/9;background:#eee}
+  .feature-img img{width:100%;height:100%;object-fit:cover}
+
+  /* Resources */
+  .res{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:10px}
+  @media(max-width:680px){.res{grid-template-columns:1fr}}
+  .res a{display:block;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 18px;transition:.15s}
+  .res a:hover{border-color:var(--gold);transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.06)}
+  .res a .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .res a .t{font-family:var(--serif);font-size:19px;margin:5px 0 3px}
+  .res a .d{color:var(--muted);font-size:13px}
+  .res a .arw{color:var(--muted);font-size:13px;margin-top:8px}
+
+  /* Contact */
+  .contact{background:var(--dark);color:#eef2ef;border-radius:20px;padding:40px 34px;margin:20px 0 10px;display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:center}
+  @media(max-width:680px){.contact{grid-template-columns:1fr;padding:30px 24px}}
+  .contact .eyebrow2{color:var(--gold)}
+  .contact h3{font-family:var(--serif);font-size:30px;font-weight:600;margin:6px 0 8px}
+  .contact p{opacity:.82;font-size:15px;line-height:1.7;max-width:420px}
+  .contact .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:22px}
+  .contact .card .name{font-family:var(--serif);font-size:22px}
+  .contact .card .role{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin-bottom:14px}
+  .contact .card .line{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:15px}
+  .contact .card .line .ic{width:20px;text-align:center;opacity:.7}
+  .contact .card a.btn{display:inline-block;margin-top:18px;background:var(--gold);color:#1a1400;font-weight:600;font-size:14px;padding:12px 20px;border-radius:10px;transition:.15s}
+  .contact .card a.btn:hover{filter:brightness(1.08)}
+
+  footer{border-top:1px solid var(--line);background:#fff}
+  .foot{max-width:1100px;margin:0 auto;padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .foot .c{color:var(--muted);font-size:12.5px}
+  .foot a.home{font-size:12.5px;color:#555;border:1px solid var(--line);padding:8px 14px;border-radius:999px;transition:.15s}
+  .foot a.home:hover{border-color:var(--gold);color:var(--ink)}
+
+  /* Lightbox */
+  .lb{position:fixed;inset:0;z-index:50;background:rgba(8,10,9,.92);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+  .lb.show{display:flex}
+  .lb img{max-width:94vw;max-height:90vh;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .lb .x{position:absolute;top:18px;right:24px;color:#fff;font-size:30px;cursor:pointer;opacity:.8}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html">The <span>Burmeisters</span></a>
+    <nav class="links" id="links">
+      <a href="index.html">Home</a>
+      <a href="properties.html" class="on">Properties</a>
+      <a href="photos.html">Photos</a>
+      <a href="songs.html">Songs</a>
+      <a href="memories.html">Memories</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="bg" src="https://static.wixstatic.com/media/4ab8b3_92c916e909294a2daf94684ecb8abed8.jpg/v1/fill/w_1800,h_1000,al_c,q_90/land.jpg" alt="Undeveloped land in Castle Rock, Colorado">
+  <div class="ov"></div>
+  <div class="in">
+    <div class="eyebrow">Burmeister Properties</div>
+    <h1>Undeveloped Land</h1>
+    <div class="lede">Available for hotel, restaurant &amp; commercial use</div>
+    <div class="loc">&#128205;&nbsp; Castle Rock, Colorado &middot; Plum Creek &amp; Interstate 25</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="grid">
+    <div class="cell"><div class="n"><b>32</b></div><div class="l">Acres available</div></div>
+    <div class="cell"><div class="n"><b>+42</b></div><div class="l">Adjoining acres</div></div>
+    <div class="cell"><div class="n"><b>90</b> ft</div><div class="l">Height limit &middot; 6 stories</div></div>
+    <div class="cell"><div class="n">I-<b>25</b></div><div class="l">Interchange frontage</div></div>
+  </div>
+</div>
+
+<!-- THIS IS CASTLE ROCK -->
+<section class="block wrap">
+  <div class="eyebrow2">This is Castle Rock</div>
+  <h2 class="big">A growing community &mdash; your place to build and expand</h2>
+  <div class="prose">
+    <p>This thirty-two acres of undeveloped land is located in the Southwest Quadrant of Castle Rock and is part of an interchange overlay plan designated for commercial development, with building height limits of 90 feet &mdash; the equivalent of six stories.</p>
+    <p>The adjoining forty-two acres to the immediate south is also currently available for development if a larger parcel is required for your project.</p>
+    <p>With the planned extension of Prairie Hawk Drive south from the Plum Creek interchange with Interstate 25, this property is an ideal location for retail and commercial use, as well as multifamily and mixed use as a buffer to surrounding properties.</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="block wrap">
+  <div class="eyebrow2">The Property</div>
+  <h2 class="big">A closer look</h2>
+  <div class="gallery">
+    <div class="g"><img loading="lazy" src="https://static.wixstatic.com/media/4ab8b3_44a8f611f85d4121be7c9107fa591e41.jpg/v1/fill/w_1000,h_700,al_c,q_88/img0774.jpg" alt="Property view"></div>
+    <div class="g"><img loading="lazy" src="https://static.wixstatic.com/media/4ab8b3_9b5871219146485c8c6ededf4c83d6a3.jpg/v1/fill/w_1000,h_700,al_c,q_88/img0780.jpg" alt="Property view"></div>
+    <div class="g"><img loading="lazy" src="https://static.wixstatic.com/media/4ab8b3_18a428511e0240fbb47a0f11557894a6.jpg/v1/fill/w_1000,h_700,al_c,q_88/img0775.jpg" alt="Property view"></div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section class="block wrap">
+  <div class="eyebrow2">Planning &amp; Context</div>
+  <h2 class="big">Development resources</h2>
+  <div class="sub">The area's conceptual plans and nearby development activity.</div>
+  <div class="res">
+    <a href="https://www.crgov.com/DocumentCenter/View/233/Comprehensive-Plan-Chapter-5A-Interchange-District-PDF?bidId=" target="_blank" rel="noopener">
+      <div class="k">Town of Castle Rock</div>
+      <div class="t">Comprehensive Plan &mdash; Chapter 5A</div>
+      <div class="d">Interchange District conceptual plan (PDF)</div>
+      <div class="arw">Open &rarr;</div>
+    </a>
+    <a href="https://crgov.com/3131/Crystal-Valley-Interchange" target="_blank" rel="noopener">
+      <div class="k">Town of Castle Rock</div>
+      <div class="t">Crystal Valley Interchange</div>
+      <div class="d">Current conceptual plans for the interchange</div>
+      <div class="arw">Open &rarr;</div>
+    </a>
+    <a href="https://www.cbsnews.com/colorado/news/castle-rock-dawson-trails-development-project-westside-property-investment-costco/" target="_blank" rel="noopener">
+      <div class="k">CBS News Colorado</div>
+      <div class="t">Dawson Trails agreement</div>
+      <div class="d">Castle Rock reaches agreement on major westside development</div>
+      <div class="arw">Open &rarr;</div>
+    </a>
+    <a href="https://dhlb.com/our-properties/dawson-trails/" target="_blank" rel="noopener">
+      <div class="k">DHLB</div>
+      <div class="t">Dawson Trails</div>
+      <div class="d">Nearby master-planned development overview</div>
+      <div class="arw">Open &rarr;</div>
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="wrap">
+  <div class="contact">
+    <div>
+      <div class="eyebrow2">Get in touch</div>
+      <h3>Interested in this property?</h3>
+      <p>For further information on the Castle Rock commercial parcels &mdash; pricing, plats, and larger-parcel options &mdash; reach out directly. We're happy to talk through your project.</p>
+    </div>
+    <div class="card">
+      <div class="name">Glen Burmeister</div>
+      <div class="role">General Partner</div>
+      <div class="line"><span class="ic">&#128222;</span><a href="tel:+13039031005">303-903-1005</a></div>
+      <div class="line"><span class="ic">&#9993;</span><a href="mailto:gburmster@gmail.com?subject=Interested%20in%20Commercial%20Property%20in%20Castle%20Rock">gburmster@gmail.com</a></div>
+      <a class="btn" href="mailto:gburmster@gmail.com?subject=Interested%20in%20Commercial%20Property%20in%20Castle%20Rock">Email about this property</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div class="c">&copy; 2026 Burmeister Properties &middot; Castle Rock, Colorado</div>
+    <a class="home" href="index.html">&larr; Back to the family home</a>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lb" id="lb"><span class="x">&times;</span><img id="lbImg" src="" alt=""></div>
+
+<script>
+  document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('links').classList.toggle('open'));
+  const lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg');
+  document.querySelectorAll('.gallery .g img').forEach(img=>{
+    img.addEventListener('click',()=>{ lbImg.src=img.src.replace(/w_1000,h_700/,'w_1600,h_1120'); lb.classList.add('show'); });
+  });
+  lb.addEventListener('click',()=>lb.classList.remove('show'));
+</script>
+</body>
+</html>
