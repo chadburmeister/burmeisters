@@ -1,5 +1,6 @@
 // Lists uploaded family photos from Cloudinary (tag: burmeisters), grouped by event.
-// Requires Vercel env vars: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
+// Requires Vercel env vars: CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
+// (CLOUDINARY_CLOUD_NAME optional; defaults below)
 const CLOUD  = process.env.CLOUDINARY_CLOUD_NAME || 'fpe4tef1';
 const KEY    = process.env.CLOUDINARY_API_KEY;
 const SECRET = process.env.CLOUDINARY_API_SECRET;
@@ -8,13 +9,14 @@ const TAG = 'burmeisters';
 let CACHE = { at: 0, data: null };
 const TTL = 60 * 1000;
 
-const slug = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'event';
+const slug   = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'event';
+const unslug = s => String(s || '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
 
-  if (!CLOUD || !KEY || !SECRET) return res.status(200).json({ events: [], configured: false });
+  if (!KEY || !SECRET) return res.status(200).json({ events: [], configured: false });
   if (CACHE.data && Date.now() - CACHE.at < TTL) return res.status(200).json(CACHE.data);
 
   try {
@@ -24,20 +26,12 @@ module.exports = async (req, res) => {
     const raw = await r.text();
     let j;
     try { j = JSON.parse(raw); }
-    catch (e) {
-      return res.status(200).json({ events: [], configured: true,
-        debug: { httpStatus: r.status, contentType: r.headers.get('content-type'),
-                 cloud: CLOUD, keyLen: (KEY||'').length, secretLen: (SECRET||'').length,
-                 snippet: raw.slice(0, 160) } });
-    }
+    catch (e) { return res.status(200).json({ events: [], configured: true, error: 'Cloudinary returned ' + r.status }); }
 
-    const unslug = s => String(s||'').replace(/-/g,' ').replace(/\b\w/g, c=>c.toUpperCase());
     const byEvent = {};
-    let _dbg = null;
-    (j.resources || []).forEach((rs, idx) => {
+    (j.resources || []).forEach(rs => {
       const ctx = (rs.context && rs.context.custom) || {};
       const tags = (rs.tags || []).filter(t => t && t !== TAG);
-      if (idx === 0) _dbg = { context: rs.context || null, tags: rs.tags || null };
       const title = ctx.event || (tags[0] ? unslug(tags[0]) : 'Family Photos');
       const id = slug(title);
       const base = `https://res.cloudinary.com/${CLOUD}/image/upload`;
@@ -64,7 +58,7 @@ module.exports = async (req, res) => {
       return e;
     }).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
-    const data = { events, configured: true, _dbg, generatedAt: new Date().toISOString() };
+    const data = { events, configured: true, generatedAt: new Date().toISOString() };
     CACHE = { at: Date.now(), data };
     return res.status(200).json(data);
   } catch (e) {
