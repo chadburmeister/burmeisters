@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
 
   try {
     const auth = 'Basic ' + Buffer.from(KEY + ':' + SECRET).toString('base64');
-    const url = `https://api.cloudinary.com/v1_1/${CLOUD}/resources/image/tags/${TAG}?context=true/resources/by_tag/${TAG}?context=true&tags=true&max_results=500max_results=500`;
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD}/resources/image/tags/${TAG}?context=true&max_results=500`;
     const r = await fetch(url, { headers: { Authorization: auth } });
     const raw = await r.text();
     let j;
