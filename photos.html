@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photos — The Burmeisters</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--serif:"Cormorant Garamond",Georgia,serif;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;--ink:#1c1c1c;--muted:#7a7a7a;--line:#ececec;--gold:#c9a24b;--bg:#faf9f7}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg)}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  a{text-decoration:none;color:inherit}
+
+  /* Nav */
+  header{position:sticky;top:0;z-index:20;background:rgba(250,249,247,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:16px 24px}
+  .logo{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:.01em}
+  .logo span{color:var(--gold)}
+  .links{display:flex;gap:26px}
+  .links a{font-size:13.5px;color:#555;padding-bottom:3px;border-bottom:2px solid transparent;transition:.15s}
+  .links a:hover{color:var(--ink)}
+  .links a.on{color:var(--ink);border-color:var(--gold);font-weight:500}
+  .menu-btn{display:none;background:none;border:0;font-size:22px;cursor:pointer}
+  @media(max-width:720px){.links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:#fff;border-bottom:1px solid var(--line)}.links.open{display:flex}.links a{padding:14px 24px;border-bottom:1px solid var(--line)}.menu-btn{display:block}}
+
+  /* Intro */
+  .intro{max-width:1140px;margin:0 auto;padding:46px 24px 8px}
+  .intro .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600}
+  .intro h1{font-family:var(--serif);font-size:clamp(34px,5vw,46px);font-weight:600;margin:8px 0 6px;letter-spacing:.01em}
+  .intro p{color:var(--muted);font-size:15px;max-width:520px}
+
+  /* Album cards */
+  .cards{max-width:1140px;margin:0 auto;padding:26px 24px 60px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  @media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.cards{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,.05);transition:.18s}
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,.10)}
+  .card .cov{height:180px;position:relative;overflow:hidden}
+  .card .cov img{transition:.4s}
+  .card:hover .cov img{transform:scale(1.05)}
+  .card .cov .cnt{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.5);color:#fff;font-size:11px;letter-spacing:.04em;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px)}
+  .card .meta{padding:16px 18px 18px}
+  .card .meta h3{font-family:var(--serif);font-size:20px;font-weight:600}
+  .card .meta .yr{color:var(--muted);font-size:12.5px;margin-top:3px;letter-spacing:.02em}
+
+  /* Footer with subtle Properties link */
+  footer{border-top:1px solid var(--line);background:#fff}
+  .foot{max-width:1140px;margin:0 auto;padding:30px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .foot .c{color:var(--muted);font-size:12.5px}
+  .foot a.prop{font-size:12.5px;color:#555;border:1px solid var(--line);padding:8px 14px;border-radius:999px;transition:.15s}
+  .foot a.prop:hover{border-color:var(--gold);color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html">The <span>Burmeisters</span></a>
+    <nav class="links" id="links">
+      <a href="index.html">Home</a>
+      <a href="https://gburmster.wixsite.com/burmeister-property" target="_blank" rel="noopener">Properties</a>
+      <a href="photos.html" class="on">Photos</a>
+      <a href="songs.html">Songs</a>
+      <a href="memories.html">Memories</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="eyebrow">Family Albums</div>
+  <h1>Our photos</h1>
+  <p>Every gathering, holiday, and ordinary day worth keeping. Choose an album to look through.</p>
+</section>
+
+<main class="cards" id="cards"></main>
+
+<footer>
+  <div class="foot">
+    <div class="c">© 2026 The Burmeister Family · burmeisters.com</div>
+    <a class="prop" href="https://gburmster.wixsite.com/burmeister-property" target="_blank" rel="noopener">Also from the family — Burmeister Properties →</a>
+  </div>
+</footer>
+
+<script>
+  // Menu toggle (mobile)
+  document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('links').classList.toggle('open'));
+
+  /* Album data. Cover images look for photos/albums/<slug>.jpg,
+     falling back to a placeholder so the page works right away. */
+  const albums = [
+    {t:'Family Portrait',      yr:'Fall 2025',        n:24,  slug:'portrait'},
+    {t:'Summer at the Lake',   yr:'July 2025',        n:142, slug:'lake'},
+    {t:'The Reunion',          yr:'2024',             n:230, slug:'reunion'},
+    {t:'Holidays',             yr:'Dec 2025',         n:88,  slug:'holidays'},
+    {t:'Graduations',          yr:'Spring 2025',      n:57,  slug:'grads'},
+    {t:'Everyday Life',        yr:'Ongoing',          n:95,  slug:'everyday'},
+  ];
+  const host = document.getElementById('cards');
+  albums.forEach((a,i)=>{
+    const local = `photos/albums/${a.slug}.jpg`;
+    const fallback = `https://picsum.photos/seed/balbum${i}/700/460`;
+    const card = document.createElement('a');
+    card.className='card'; card.href='#';
+    card.innerHTML = `
+      <div class="cov"><img alt="${a.t}"><span class="cnt">${a.n} photos</span></div>
+      <div class="meta"><h3>${a.t}</h3><div class="yr">${a.yr}</div></div>`;
+    const img = card.querySelector('img');
+    const probe = new Image();
+    probe.onload  = ()=> img.src = local;
+    probe.onerror = ()=> img.src = fallback;
+    probe.src = local;
+    host.appendChild(card);
+  });
+</script>
+</body>
+</html>

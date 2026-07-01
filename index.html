@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Burmeisters — Family Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --gold:#c9a24b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);color:#fff;background:#000;overflow:hidden}
+
+  /* ---------- Carousel ---------- */
+  .stage{position:fixed;inset:0;z-index:0}
+  .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.6s ease;background-size:cover;background-position:center;transform:scale(1.06);animation:kb 9s ease-out forwards}
+  .slide.active{opacity:1}
+  @keyframes kb{from{transform:scale(1.10)}to{transform:scale(1.0)}}
+  .scrim{position:fixed;inset:0;z-index:1;background:
+     radial-gradient(120% 90% at 50% 40%,rgba(0,0,0,.15),rgba(0,0,0,.55) 70%,rgba(0,0,0,.78)),
+     linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.15) 30%,rgba(0,0,0,.65))}
+
+  /* ---------- Center content ---------- */
+  .veil{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+  .brandmark{font-family:var(--serif);font-size:15px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);opacity:.9;margin-bottom:10px}
+  h1{font-family:var(--serif);font-weight:500;font-size:clamp(44px,8vw,86px);line-height:1;letter-spacing:.01em;text-shadow:0 2px 30px rgba(0,0,0,.5)}
+  .sub{font-family:var(--serif);font-size:clamp(16px,2.4vw,22px);opacity:.9;margin-top:14px;font-style:italic}
+  .rule{width:54px;height:1px;background:var(--gold);margin:26px auto 0;opacity:.8}
+
+  /* ---------- Login card ---------- */
+  .gate{margin-top:34px;width:min(360px,90vw);background:rgba(20,20,20,.42);backdrop-filter:blur(14px) saturate(1.1);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:26px 24px;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+  .gate label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.65;margin-bottom:10px}
+  .field{display:flex;gap:8px}
+  .gate input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:#fff;font-family:var(--sans);font-size:15px;padding:13px 14px;border-radius:10px;outline:none;transition:.15s}
+  .gate input:focus{border-color:var(--gold);background:rgba(255,255,255,.12)}
+  .gate button{background:var(--gold);color:#1a1400;border:0;font-family:var(--sans);font-weight:600;font-size:14px;padding:0 20px;border-radius:10px;cursor:pointer;transition:.15s}
+  .gate button:hover{filter:brightness(1.08)}
+  .hint{margin-top:12px;font-size:12px;opacity:.6}
+  .err{color:#ffb4a8;font-size:12.5px;margin-top:12px;min-height:16px;opacity:0;transition:.2s}
+  .err.show{opacity:1}
+
+  /* ---------- Hub (after login) ---------- */
+  .hub{position:fixed;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .7s ease}
+  .hub.show{opacity:1;pointer-events:auto}
+  .hub .welcome{font-family:var(--serif);font-size:clamp(30px,5vw,52px);font-weight:500;margin-bottom:6px}
+  .hub .wsub{font-family:var(--serif);font-style:italic;opacity:.85;margin-bottom:34px}
+  .tabs{display:grid;grid-template-columns:repeat(4,minmax(120px,160px));gap:16px}
+  @media(max-width:680px){.tabs{grid-template-columns:repeat(2,1fr);max-width:360px}}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px 14px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,20,20,.4);backdrop-filter:blur(12px);color:#fff;text-decoration:none;transition:.18s}
+  .tab:hover{transform:translateY(-4px);border-color:var(--gold);background:rgba(30,30,30,.55)}
+  .tab .ic{font-size:24px}
+  .tab .t{font-family:var(--serif);font-size:19px}
+  .tab .d{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.55}
+  .hub .signout{margin-top:30px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.6;background:none;border:0;color:#fff;cursor:pointer}
+  .hub .signout:hover{opacity:1;color:var(--gold)}
+
+  /* ---------- Carousel dots ---------- */
+  .dots{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:4;display:flex;gap:9px}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.35);transition:.2s}
+  .dots i.on{background:var(--gold);width:20px;border-radius:4px}
+  .footcred{position:fixed;bottom:20px;right:24px;z-index:4;font-size:11px;letter-spacing:.12em;opacity:.45}
+  @media(max-width:680px){.footcred{display:none}}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage"></div>
+<div class="scrim"></div>
+
+<!-- Gateway / login -->
+<div class="veil" id="veil">
+  <div class="brandmark">Est. Family</div>
+  <h1>The Burmeisters</h1>
+  <div class="sub">A private home for our family</div>
+  <div class="rule"></div>
+
+  <form class="gate" id="gate" autocomplete="off">
+    <label for="pw">Family members — please sign in</label>
+    <div class="field">
+      <input id="pw" type="password" placeholder="Family password" aria-label="Family password">
+      <button type="submit">Enter</button>
+    </div>
+    <div class="err" id="err">That password doesn't match. Try again.</div>
+    <div class="hint">Ask a family member if you need the password.</div>
+  </form>
+</div>
+
+<!-- Hub / tabs (revealed after login) -->
+<div class="hub" id="hub">
+  <div class="welcome">Welcome home</div>
+  <div class="wsub">Where would you like to go?</div>
+  <nav class="tabs">
+    <a class="tab" href="https://gburmster.wixsite.com/burmeister-property" target="_blank" rel="noopener">
+      <span class="ic">🏡</span><span class="t">Properties</span><span class="d">Burmeister Properties</span>
+    </a>
+    <a class="tab" href="photos.html">
+      <span class="ic">📷</span><span class="t">Photos</span><span class="d">Albums &amp; memories</span>
+    </a>
+    <a class="tab" href="songs.html">
+      <span class="ic">🎵</span><span class="t">Songs</span><span class="d">Our playlist</span>
+    </a>
+    <a class="tab" href="memories.html">
+      <span class="ic">📖</span><span class="t">Memories</span><span class="d">Stories &amp; moments</span>
+    </a>
+  </nav>
+  <button class="signout" id="signout">Sign out</button>
+</div>
+
+<div class="dots" id="dots"></div>
+<div class="footcred">burmeisters.com</div>
+
+<script>
+/* =========================================================
+   CAROUSEL
+   Drop your family photos in a /photos folder next to this
+   file, named 01.jpg through 10.jpg. The uploaded family
+   portrait should be 01.jpg so it opens the site.
+   Missing files gracefully fall back to a placeholder.
+   ========================================================= */
+const SLIDE_COUNT = 10;                 // up to 10 photos cycle
+const INTERVAL_MS = 6000;               // time each photo is shown
+const stage = document.getElementById('stage');
+const slides = [];
+
+for(let i=1;i<=SLIDE_COUNT;i++){
+  const n = String(i).padStart(2,'0');
+  const local = `photos/${n}.jpg`;
+  const fallback = `https://picsum.photos/seed/burm${i}/1600/1000`;
+  const div = document.createElement('div');
+  div.className = 'slide';
+  // preload; use local if it exists, else fallback
+  const probe = new Image();
+  probe.onload  = ()=> div.style.backgroundImage = `url("${local}")`;
+  probe.onerror = ()=> div.style.backgroundImage = `url("${fallback}")`;
+  probe.src = local;
+  stage.appendChild(div);
+  slides.push(div);
+}
+
+const dotsWrap = document.getElementById('dots');
+slides.forEach((_,i)=>{ const d=document.createElement('i'); if(i===0)d.className='on'; dotsWrap.appendChild(d); });
+const dots = [...dotsWrap.children];
+
+let cur = 0;
+function show(i){
+  slides.forEach((s,idx)=> s.classList.toggle('active', idx===i));
+  dots.forEach((d,idx)=> d.classList.toggle('on', idx===i));
+  cur = i;
+}
+show(0);
+let timer = setInterval(()=> show((cur+1)%SLIDE_COUNT), INTERVAL_MS);
+
+/* =========================================================
+   PASSWORD GATE  (prototype / soft gate)
+   Change FAMILY_PASSWORD below to whatever you like.
+   NOTE: client-side gates are for privacy-by-obscurity only.
+   For real protection, host behind password auth (e.g.
+   Netlify/Cloudflare Access, or a host login). I can set
+   that up when you pick a host.
+   ========================================================= */
+const FAMILY_PASSWORD = "burmeister";   // <-- change me
+
+const gate = document.getElementById('gate');
+const pw   = document.getElementById('pw');
+const err  = document.getElementById('err');
+const veil = document.getElementById('veil');
+const hub  = document.getElementById('hub');
+
+function enterSite(){
+  veil.style.transition='opacity .6s ease';
+  veil.style.opacity='0';
+  veil.style.pointerEvents='none';
+  setTimeout(()=>{ veil.style.display='none'; hub.classList.add('show'); }, 550);
+  try{ sessionStorage.setItem('burm_in','1'); }catch(e){}
+}
+function signOut(){
+  try{ sessionStorage.removeItem('burm_in'); }catch(e){}
+  hub.classList.remove('show');
+  veil.style.display='flex';
+  requestAnimationFrame(()=>{ veil.style.opacity='1'; veil.style.pointerEvents='auto'; });
+  pw.value='';
+}
+
+gate.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  if(pw.value.trim().toLowerCase() === FAMILY_PASSWORD.toLowerCase()){
+    err.classList.remove('show');
+    enterSite();
+  }else{
+    err.classList.add('show');
+    pw.focus(); pw.select();
+  }
+});
+document.getElementById('signout').addEventListener('click', signOut);
+
+/* stay signed in during the session */
+try{ if(sessionStorage.getItem('burm_in')==='1'){ veil.style.display='none'; hub.classList.add('show'); } }catch(e){}
+</script>
+</body>
+</html>
