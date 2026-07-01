@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
 
   try {
     const auth = 'Basic ' + Buffer.from(KEY + ':' + SECRET).toString('base64');
-    const url = `https://api.cloudinary.com/v1_1/${CLOUD}/resources/image/tags/${TAG}?context=true&max_results=500`;
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD}/resources/image/tags/${TAG}?context=true&tags=true&max_results=500`;
     const r = await fetch(url, { headers: { Authorization: auth } });
     const raw = await r.text();
     let j;
@@ -31,10 +31,14 @@ module.exports = async (req, res) => {
                  snippet: raw.slice(0, 160) } });
     }
 
+    const unslug = s => String(s||'').replace(/-/g,' ').replace(/\b\w/g, c=>c.toUpperCase());
     const byEvent = {};
-    (j.resources || []).forEach(rs => {
+    let _dbg = null;
+    (j.resources || []).forEach((rs, idx) => {
       const ctx = (rs.context && rs.context.custom) || {};
-      const title = ctx.event || 'Family Photos';
+      const tags = (rs.tags || []).filter(t => t && t !== TAG);
+      if (idx === 0) _dbg = { context: rs.context || null, tags: rs.tags || null };
+      const title = ctx.event || (tags[0] ? unslug(tags[0]) : 'Family Photos');
       const id = slug(title);
       const base = `https://res.cloudinary.com/${CLOUD}/image/upload`;
       const ver = rs.version ? `v${rs.version}/` : '';
@@ -60,7 +64,7 @@ module.exports = async (req, res) => {
       return e;
     }).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
-    const data = { events, configured: true, generatedAt: new Date().toISOString() };
+    const data = { events, configured: true, _dbg, generatedAt: new Date().toISOString() };
     CACHE = { at: Date.now(), data };
     return res.status(200).json(data);
   } catch (e) {
