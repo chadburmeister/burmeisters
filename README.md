@@ -19,10 +19,16 @@ protection or Cloudflare/Netlify Access.
 ## Deploy
 Static — no build step. Vercel auto-detects. Root = this folder.
 
-## Photos — event albums via Apple Shared Albums
-- Each event = one iCloud Shared Album with "Public Website" turned on.
-- Add its token to `api/albums.json`:
-  `[{ "id":"reunion-2026", "title":"Family Reunion 2026", "date":"2026", "token":"B0Gs..." }]`
-  (token = the part of the album's public link after `#`)
-- `api/photos.js` pulls each album (webstream + webasseturls) and the Photos page renders them as event cards with search.
-- `photos-local.js` holds locally-hosted seed photos that always show.
+## Photos — event albums via Apple Shared Albums (curated allowlist)
+Albums are OPT-IN. Nothing is imported unless its link is in `api/albums.json`.
+Each entry:
+```json
+[
+  { "id":"reunion-2026", "title":"Family Reunion 2026", "date":"2026",
+    "token":"B0Gs...", "enabled": true }
+]
+```
+- `token` = the part of the album's public link after `#`.
+- `"enabled": false` hides an album from the site without deleting its entry (easy pause / un-pause).
+- To exclude an album entirely, just don't add it (or remove its entry).
+- `api/photos.js` pulls only enabled albums; `photos-local.js` holds always-on seed photos.

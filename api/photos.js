@@ -83,6 +83,7 @@ module.exports = async (req, res) => {
   const events = [];
   for (const a of (albums || [])) {
     if (!a || !a.token) continue;
+    if (a.enabled === false) continue; // toggle an album off without deleting it
     try {
       const photos = await fetchAlbum(a.token);
       events.push({
