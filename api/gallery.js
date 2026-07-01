@@ -58,7 +58,7 @@ module.exports = async (req, res) => {
       return e;
     }).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
-    const data = { events, configured: true, generatedAt: new Date().toISOString() };
+    const data = { events, configured: true, adminReady: !!process.env.PHOTOS_ADMIN_PASSWORD, generatedAt: new Date().toISOString() };
     CACHE = { at: Date.now(), data };
     return res.status(200).json(data);
   } catch (e) {
