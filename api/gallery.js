@@ -21,7 +21,15 @@ module.exports = async (req, res) => {
     const auth = 'Basic ' + Buffer.from(KEY + ':' + SECRET).toString('base64');
     const url = `https://api.cloudinary.com/v1_1/${CLOUD}/resources/by_tag/${TAG}?context=true&tags=true&max_results=500`;
     const r = await fetch(url, { headers: { Authorization: auth } });
-    const j = await r.json();
+    const raw = await r.text();
+    let j;
+    try { j = JSON.parse(raw); }
+    catch (e) {
+      return res.status(200).json({ events: [], configured: true,
+        debug: { httpStatus: r.status, contentType: r.headers.get('content-type'),
+                 cloud: CLOUD, keyLen: (KEY||'').length, secretLen: (SECRET||'').length,
+                 snippet: raw.slice(0, 160) } });
+    }
 
     const byEvent = {};
     (j.resources || []).forEach(rs => {
