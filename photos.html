@@ -34,8 +34,8 @@
   .search .ic{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#aaa;font-size:16px}
   .search .clr{position:absolute;right:12px;top:50%;transform:translateY(-50%);border:0;background:#eee;color:#666;width:22px;height:22px;border-radius:50%;cursor:pointer;display:none}
   .search.has .clr{display:block}
-  .addbtn{font-size:13px;color:#555;border:1px solid var(--line);background:#fff;padding:12px 16px;border-radius:12px;cursor:pointer;transition:.15s;white-space:nowrap}
-  .addbtn:hover{border-color:var(--gold);color:var(--ink)}
+  .addbtn{font-size:14px;font-weight:600;color:#1a1400;background:var(--gold);border:0;padding:13px 20px;border-radius:12px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .addbtn:hover{filter:brightness(1.06)}
 
   .wrap{max-width:1140px;margin:0 auto;padding:16px 24px 60px}
   .status{color:var(--muted);font-size:13px;padding:6px 0 14px}
@@ -45,7 +45,6 @@
   .backbar h2{font-family:var(--serif);font-size:26px;font-weight:600}
   .backbar .sub{color:var(--muted);font-size:13px}
 
-  /* Event cards */
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   @media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}}
   @media(max-width:560px){.cards{grid-template-columns:1fr}}
@@ -54,12 +53,10 @@
   .card .cov{height:180px;position:relative;background:#eee;overflow:hidden}
   .card .cov img{transition:.4s}.card:hover .cov img{transform:scale(1.05)}
   .card .cov .cnt{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.55);color:#fff;font-size:11px;padding:4px 10px;border-radius:999px;backdrop-filter:blur(4px)}
-  .card .cov .src{position:absolute;left:12px;bottom:12px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.9);color:#555;padding:3px 8px;border-radius:6px}
   .card .meta{padding:15px 18px 18px}
   .card .meta h3{font-family:var(--serif);font-size:20px;font-weight:600}
   .card .meta .yr{color:var(--muted);font-size:12.5px;margin-top:3px}
 
-  /* Photo grid */
   .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   @media(max-width:900px){.pgrid{grid-template-columns:repeat(3,1fr)}}
   @media(max-width:560px){.pgrid{grid-template-columns:repeat(2,1fr)}}
@@ -67,7 +64,7 @@
   .ph img{transition:.3s}.ph:hover img{transform:scale(1.05)}
   .ph .badge{position:absolute;left:8px;bottom:8px;font-size:10.5px;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:6px;backdrop-filter:blur(3px);max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-  .empty{text-align:center;color:var(--muted);padding:60px 20px;border:1px dashed var(--line);border-radius:16px;background:#fff}
+  .empty{text-align:center;color:var(--muted);padding:56px 20px;border:1px dashed var(--line);border-radius:16px;background:#fff}
   .empty h3{font-family:var(--serif);font-size:22px;color:var(--ink);margin-bottom:6px}
 
   /* Lightbox */
@@ -79,6 +76,32 @@
   .lb .nav-a{top:50%;transform:translateY(-50%);font-size:46px;opacity:.7;padding:10px 18px}
   .lb .prev{left:10px}.lb .next{right:10px}
   .lb .cap{position:absolute;bottom:20px;left:0;right:0;text-align:center;color:#eee;font-size:13px;opacity:.85}
+
+  /* Upload modal */
+  .modal{position:fixed;inset:0;z-index:70;background:rgba(10,12,11,.55);display:none;align-items:flex-start;justify-content:center;padding:5vh 16px;overflow:auto}
+  .modal.show{display:flex}
+  .sheet{background:#fff;border-radius:18px;width:min(560px,100%);box-shadow:0 30px 80px rgba(0,0,0,.35);overflow:hidden}
+  .sheet .hd{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:between;gap:12px}
+  .sheet .hd h3{font-family:var(--serif);font-size:24px;font-weight:600;flex:1}
+  .sheet .hd .x{border:0;background:#f1f1ef;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;color:#555}
+  .sheet .bd{padding:22px 24px}
+  .fld{margin-bottom:16px}
+  .fld label{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+  .fld input[type=text]{width:100%;font-family:var(--sans);font-size:15px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;outline:none}
+  .fld input:focus{border-color:var(--gold)}
+  .drop{border:2px dashed #d9d6cf;border-radius:14px;padding:26px;text-align:center;color:var(--muted);cursor:pointer;transition:.15s}
+  .drop.over{border-color:var(--gold);background:#fbf7ee}
+  .drop b{color:var(--ink)}
+  .thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px;margin-top:12px}
+  .thumbs .t{position:relative;aspect-ratio:1/1;border-radius:8px;overflow:hidden;background:#eee}
+  .thumbs .t .bar{position:absolute;left:0;bottom:0;height:4px;background:var(--gold);width:0;transition:width .2s}
+  .thumbs .t.done:after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(47,111,79,.55);color:#fff;font-weight:700}
+  .sheet .ft{padding:16px 24px 22px;display:flex;gap:10px;align-items:center;justify-content:flex-end;border-top:1px solid var(--line)}
+  .sheet .ft .msg{margin-right:auto;font-size:13px;color:var(--muted)}
+  .btn{border:0;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer}
+  .btn.primary{background:var(--gold);color:#1a1400}.btn.primary:disabled{opacity:.5;cursor:default}
+  .btn.ghost{background:#f1f1ef;color:#333}
+  .notice{background:#fbf7ee;border:1px solid #eadfc4;color:#8a6d2f;font-size:13px;padding:12px 14px;border-radius:10px;margin-bottom:16px;line-height:1.5}
 
   footer{border-top:1px solid var(--line);background:#fff}
   .foot{max-width:1140px;margin:0 auto;padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
@@ -105,7 +128,7 @@
 <section class="intro">
   <div class="eyebrow">Family Albums</div>
   <h1>Our photos</h1>
-  <p>Browse by event, or search across every album. Family: add photos to a shared album and they show up here automatically.</p>
+  <p>Browse by event or search across every album. Anyone in the family can add photos — just tap “Add photos.”</p>
 </section>
 
 <div class="searchwrap">
@@ -114,7 +137,7 @@
     <input id="q" type="search" placeholder="Search events, people, captions, or year…" aria-label="Search photos">
     <button class="clr" id="clr" aria-label="Clear">&times;</button>
   </div>
-  <button class="addbtn" id="addBtn">＋ Add your photos</button>
+  <button class="addbtn" id="addBtn">＋ Add photos</button>
 </div>
 
 <main class="wrap">
@@ -132,6 +155,7 @@
   </div>
 </footer>
 
+<!-- Lightbox -->
 <div class="lb" id="lb">
   <span class="x" id="lbX">&times;</span>
   <span class="nav-a prev" id="lbPrev">&#8249;</span>
@@ -140,117 +164,210 @@
   <div class="cap" id="lbCap"></div>
 </div>
 
+<!-- Upload modal -->
+<div class="modal" id="modal">
+  <div class="sheet">
+    <div class="hd"><h3>Add photos</h3><button class="x" id="mX" aria-label="Close">&times;</button></div>
+    <div class="bd">
+      <div class="notice" id="cfgNotice" style="display:none"></div>
+      <div class="fld">
+        <label for="uEvent">Event</label>
+        <input type="text" id="uEvent" list="eventList" placeholder="e.g. Family Reunion 2026 (new or existing)">
+        <datalist id="eventList"></datalist>
+      </div>
+      <div class="fld">
+        <label for="uName">Your name</label>
+        <input type="text" id="uName" placeholder="e.g. Lindsey">
+      </div>
+      <div class="fld">
+        <label for="uCap">Caption (optional)</label>
+        <input type="text" id="uCap" placeholder="A few words about these photos">
+      </div>
+      <div class="fld">
+        <label>Photos</label>
+        <div class="drop" id="drop"><b>Tap to choose</b> or drag photos here<br><span style="font-size:12px">JP  ·  PNG  ·  HEIC</span></div>
+        <input type="file" id="file" accept="image/*" multiple style="display:none">
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+    </div>
+    <div class="ft">
+      <span class="msg" id="uMsg"></span>
+      <button class="btn ghost" id="uCancel">Cancel</button>
+      <button class="btn primary" id="uGo" disabled>Upload</button>
+    </div>
+  </div>
+</div>
+
+<script src="photos-config.js"></script>
 <script src="photos-local.js"></script>
 <script>
   const $ = s => document.querySelector(s);
   $('#menuBtn').addEventListener('click',()=>$('#links').classList.toggle('open'));
+  const slug = s => String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'event';
+  const yr = d => d ? String(d).slice(0,4) : '';
+  const cfgOK = () => window.CLOUD && window.CLOUD.cloudName && window.CLOUD.uploadPreset;
 
   let EVENTS = Array.isArray(window.LOCAL_EVENTS) ? window.LOCAL_EVENTS.slice() : [];
-  let current = null;      // event being viewed, or null
-  let lightboxSet = [];    // photos array currently in lightbox
-  let lightboxIdx = 0;
+  let current = null, lightboxSet = [], lightboxIdx = 0;
 
-  const yr = d => d ? String(d).slice(0,4) : '';
+  const thumbOf = p => p.thumb || p.url;
+  const bigOf   = p => p.big || p.url;
   const photoSearchStr = (p, ev) => [ev.title, ev.date, p.caption, p.contributor, yr(p.date)].join(' ').toLowerCase();
 
-  // ---- data load ----
   async function load(){
     try{
-      const r = await fetch('/api/photos', {cache:'no-store'});
+      const r = await fetch('/api/gallery', {cache:'no-store'});
       if(r.ok){
         const data = await r.json();
         (data.events||[]).forEach(ev=>{
-          if(ev.error || !ev.photos || !ev.photos.length) return;
-          if(!EVENTS.find(e=>e.id===ev.id)) EVENTS.push(ev);
+          if(!ev.photos || !ev.photos.length) return;
+          const existing = EVENTS.find(e=>e.id===ev.id);
+          if(existing) existing.photos = ev.photos.concat(existing.photos);
+          else EVENTS.unshift(ev);
         });
       }
-    }catch(e){ /* offline / not deployed yet: local events still show */ }
+    }catch(e){}
     render();
   }
 
-  // ---- rendering ----
   function render(){
     const q = $('#q').value.trim().toLowerCase();
     const backbar=$('#backbar'), cards=$('#cards'), photos=$('#photos'), empty=$('#empty'), status=$('#status');
     backbar.style.display='none'; cards.style.display='none'; photos.style.display='none'; empty.style.display='none';
 
-    if(q){                                   // ---- SEARCH MODE ----
+    if(q){
       const results=[];
-      EVENTS.forEach(ev=> (ev.photos||[]).forEach(p=>{ if(photoSearchStr(p,ev).includes(q)) results.push({p,ev}); }));
+      EVENTS.forEach(ev=>(ev.photos||[]).forEach(p=>{ if(photoSearchStr(p,ev).includes(q)) results.push({p,ev}); }));
       status.textContent = results.length ? `${results.length} photo${results.length>1?'s':''} matching “${$('#q').value.trim()}”` : '';
       if(!results.length){ empty.style.display='block'; empty.innerHTML='<h3>No matches</h3><p>Try a name, event, or year.</p>'; return; }
-      renderPhotoGrid(results.map(r=>r.p), photos, results.map(r=>r.ev.title), results.map(r=>r.p));
-      photos.style.display='grid';
-      return;
+      renderPhotoGrid(results.map(r=>r.p), photos, results.map(r=>r.ev.title));
+      photos.style.display='grid'; return;
     }
-
-    if(current){                             // ---- EVENT VIEW ----
+    if(current){
       status.textContent='';
       backbar.style.display='flex';
-      backbar.innerHTML = `<button id="back">&larr; All events</button><div><h2>${current.title}</h2><div class="sub">${current.date||''}${current.date?' · ':''}${(current.photos||[]).length} photos${current.source==='icloud'?' · Shared album':''}</div></div>`;
+      backbar.innerHTML = `<button id="back">&larr; All events</button><div><h2>${current.title}</h2><div class="sub">${current.date||''}${current.date?' · ':''}${(current.photos||[]).length} photos</div></div>`;
       backbar.querySelector('#back').addEventListener('click',()=>{ current=null; render(); });
-      renderPhotoGrid(current.photos||[], photos, null, current.photos||[]);
-      photos.style.display='grid';
-      return;
+      renderPhotoGrid(current.photos||[], photos, null);
+      photos.style.display='grid'; return;
     }
-
-    // ---- EVENT GRID ----
     const total = EVENTS.reduce((n,e)=>n+((e.photos||[]).length),0);
     status.textContent = EVENTS.length ? `${EVENTS.length} event${EVENTS.length>1?'s':''} · ${total} photos` : '';
-    if(!EVENTS.length){ empty.style.display='block'; empty.innerHTML='<h3>No photos yet</h3><p>Create a shared album and it will appear here.</p>'; return; }
-    cards.style.display='grid';
-    cards.innerHTML='';
+    if(!EVENTS.length){ empty.style.display='block'; empty.innerHTML='<h3>No photos yet</h3><p>Tap “Add photos” to start an album.</p>'; return; }
+    cards.style.display='grid'; cards.innerHTML='';
     EVENTS.forEach(ev=>{
       const card=document.createElement('div'); card.className='card';
-      const cover = ev.cover || (ev.photos&&ev.photos[0]&&ev.photos[0].url) || '';
-      card.innerHTML = `
-        <div class="cov"><img loading="lazy" src="${cover}" alt="${ev.title}">
-          <span class="cnt">${(ev.photos||[]).length} photos</span>
-          ${ev.source==='icloud'?'<span class="src">Shared album</span>':''}
-        </div>
+      const cover = ev.cover || (ev.photos&&ev.photos[0]&&thumbOf(ev.photos[0])) || '';
+      card.innerHTML = `<div class="cov"><img loading="lazy" src="${cover}" alt="${ev.title}"><span class="cnt">${(ev.photos||[]).length} photos</span></div>
         <div class="meta"><h3>${ev.title}</h3><div class="yr">${ev.date||''}</div></div>`;
       card.addEventListener('click',()=>{ current=ev; window.scrollTo({top:0,behavior:'smooth'}); render(); });
       cards.appendChild(card);
     });
   }
 
-  function renderPhotoGrid(list, container, badges, lbList){
+  function renderPhotoGrid(list, container, badges){
     container.innerHTML='';
     list.forEach((p,i)=>{
       const d=document.createElement('div'); d.className='ph';
-      d.innerHTML = `<img loading="lazy" src="${p.url}" alt="${p.caption||''}">${badges?`<span class="badge">${badges[i]}</span>`:''}`;
-      d.addEventListener('click',()=>openLightbox(lbList||list, i));
+      d.innerHTML = `<img loading="lazy" src="${thumbOf(p)}" alt="${p.caption||''}">${badges?`<span class="badge">${badges[i]}</span>`:''}`;
+      d.addEventListener('click',()=>openLightbox(list,i));
       container.appendChild(d);
     });
   }
 
-  // ---- lightbox ----
   function openLightbox(set, idx){ lightboxSet=set; lightboxIdx=idx; showLb(); $('#lb').classList.add('show'); }
-  function showLb(){
-    const p=lightboxSet[lightboxIdx]; if(!p)return;
-    $('#lbImg').src=p.url;
-    $('#lbCap').textContent=[p.caption,p.contributor,yr(p.date)].filter(Boolean).join(' · ');
-  }
+  function showLb(){ const p=lightboxSet[lightboxIdx]; if(!p)return; $('#lbImg').src=bigOf(p); $('#lbCap').textContent=[p.caption,p.contributor,yr(p.date)].filter(Boolean).join(' · '); }
   function step(n){ lightboxIdx=(lightboxIdx+n+lightboxSet.length)%lightboxSet.length; showLb(); }
   $('#lbX').addEventListener('click',()=>$('#lb').classList.remove('show'));
   $('#lbPrev').addEventListener('click',e=>{e.stopPropagation();step(-1);});
   $('#lbNext').addEventListener('click',e=>{e.stopPropagation();step(1);});
   $('#lb').addEventListener('click',e=>{ if(e.target===$('#lb')) $('#lb').classList.remove('show'); });
-  document.addEventListener('keydown',e=>{
-    if(!$('#lb').classList.contains('show'))return;
-    if(e.key==='Escape')$('#lb').classList.remove('show');
-    if(e.key==='ArrowLeft')step(-1);
-    if(e.key==='ArrowRight')step(1);
-  });
+  document.addEventListener('keydown',e=>{ if(!$('#lb').classList.contains('show'))return; if(e.key==='Escape')$('#lb').classList.remove('show'); if(e.key==='ArrowLeft')step(-1); if(e.key==='ArrowRight')step(1); });
 
-  // ---- search input ----
   const box=$('#searchBox');
   $('#q').addEventListener('input',()=>{ box.classList.toggle('has', !!$('#q').value); current=null; render(); });
   $('#clr').addEventListener('click',()=>{ $('#q').value=''; box.classList.remove('has'); render(); });
 
-  // ---- add photos info ----
-  $('#addBtn').addEventListener('click',()=>{
-    alert("To add photos:\n\n1. In the Photos app on your iPhone, open (or create) the shared album for the event.\n2. Tap + and add your photos.\n\nThey'll appear here automatically. Ask Chad to set up a new event album if you need one.");
+  /* ---------- Upload ---------- */
+  const modal=$('#modal'), fileInput=$('#file'), drop=$('#drop'), thumbs=$('#thumbs');
+  let picked=[];
+
+  $('#addBtn').addEventListener('click',openModal);
+  $('#mX').addEventListener('click',closeModal);
+  $('#uCancel').addEventListener('click',closeModal);
+  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+
+  function openModal(){
+    // event suggestions
+    const dl=$('#eventList'); dl.innerHTML='';
+    EVENTS.forEach(ev=>{ const o=document.createElement('option'); o.value=ev.title; dl.appendChild(o); });
+    $('#uName').value = localStorage.getItem('burm_uploader')||'';
+    const notice=$('#cfgNotice');
+    if(!cfgOK()){ notice.style.display='block'; notice.textContent='Uploads aren’t connected yet. Ask Chad to finish the photo setup (Cloudinary) — browsing still works.'; }
+    else notice.style.display='none';
+    picked=[]; thumbs.innerHTML=''; updateGo();
+    modal.classList.add('show');
+  }
+  function closeModal(){ modal.classList.remove('show'); $('#uMsg').textContent=''; }
+
+  drop.addEventListener('click',()=>fileInput.click());
+  ['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+  ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+  drop.addEventListener('drop',e=>addFiles(e.dataTransfer.files));
+  fileInput.addEventListener('change',()=>addFiles(fileInput.files));
+
+  function addFiles(list){
+    [...list].forEach(f=>{ if(f.type.startsWith('image/')) picked.push(f); });
+    thumbs.innerHTML='';
+    picked.forEach((f,i)=>{
+      const t=document.createElement('div'); t.className='t'; t.dataset.i=i;
+      const img=document.createElement('img'); img.src=URL.createObjectURL(f); t.appendChild(img);
+      const bar=document.createElement('div'); bar.className='bar'; t.appendChild(bar);
+      thumbs.appendChild(t);
+    });
+    updateGo();
+  }
+  function updateGo(){ $('#uGo').disabled = !(picked.length && cfgOK()); }
+
+  function cloudUpload(file, meta, onprogress){
+    return new Promise((resolve,reject)=>{
+      const fd=new FormData();
+      fd.append('file',file);
+      fd.append('upload_preset',window.CLOUD.uploadPreset);
+      fd.append('tags','burmeisters,'+slug(meta.event));
+      const clean=v=>String(v||'').replace(/[|=]/g,' ').trim();
+      fd.append('context',`event=${clean(meta.event)}|uploader=${clean(meta.uploader)}|caption=${clean(meta.caption)}`);
+      const xhr=new XMLHttpRequest();
+      xhr.open('POST',`https://api.cloudinary.com/v1_1/${window.CLOUD.cloudName}/image/upload`);
+      xhr.upload.onprogress=e=>{ if(e.lengthComputable&&onprogress) onprogress(e.loaded/e.total); };
+      xhr.onload=()=>{ try{const j=JSON.parse(xhr.responseText); (xhr.status<300)?resolve(j):reject(new Error((j.error&&j.error.message)||('HTTP '+xhr.status)));}catch(err){reject(err);} };
+      xhr.onerror=()=>reject(new Error('network error'));
+      xhr.send(fd);
+    });
+  }
+
+  $('#uGo').addEventListener('click',async ()=>{
+    const event=$('#uEvent').value.trim(), name=$('#uName').value.trim(), cap=$('#uCap').value.trim();
+    if(!event){ $('#uMsg').textContent='Please name the event.'; return; }
+    if(!name){ $('#uMsg').textContent='Please add your name.'; return; }
+    localStorage.setItem('burm_uploader',name);
+    $('#uGo').disabled=true; $('#uCancel').disabled=true;
+    let done=0;
+    for(let i=0;i<picked.length;i++){
+      const cell=thumbs.querySelector(`.t[data-i="${i}"]`); const bar=cell&&cell.querySelector('.bar');
+      $('#uMsg').textContent=`Uploading ${i+1} of ${picked.length}…`;
+      try{ await cloudUpload(picked[i],{event,uploader:name,caption:cap},f=>{ if(bar)bar.style.width=(f*100)+'%'; });
+        if(cell)cell.classList.add('done'); done++;
+      }catch(err){ $('#uMsg').textContent='Error: '+err.message; }
+    }
+    $('#uMsg').textContent=`Uploaded ${done} photo${done!==1?'s':''}. Refreshing…`;
+    // reload gallery data
+    EVENTS = Array.isArray(window.LOCAL_EVENTS) ? window.LOCAL_EVENTS.slice() : [];
+    await load();
+    const target = EVENTS.find(e=>e.id===slug(event));
+    closeModal();
+    if(target){ current=target; render(); window.scrollTo({top:0,behavior:'smooth'}); }
+    $('#uCancel').disabled=false;
   });
 
   load();

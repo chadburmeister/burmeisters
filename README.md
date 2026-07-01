@@ -19,16 +19,12 @@ protection or Cloudflare/Netlify Access.
 ## Deploy
 Static — no build step. Vercel auto-detects. Root = this folder.
 
-## Photos — event albums via Apple Shared Albums (curated allowlist)
-Albums are OPT-IN. Nothing is imported unless its link is in `api/albums.json`.
-Each entry:
-```json
-[
-  { "id":"reunion-2026", "title":"Family Reunion 2026", "date":"2026",
-    "token":"B0Gs...", "enabled": true }
-]
-```
-- `token` = the part of the album's public link after `#`.
-- `"enabled": false` hides an album from the site without deleting its entry (easy pause / un-pause).
-- To exclude an album entirely, just don't add it (or remove its entry).
-- `api/photos.js` pulls only enabled albums; `photos-local.js` holds always-on seed photos.
+## Photos — direct family uploads (Cloudinary)
+Family uploads photos on the Photos page: pick/create an event, type their name, drop files.
+Setup (one-time):
+1. Create a free Cloudinary account; note your **cloud name**.
+2. Settings → Upload → add an **Unsigned** upload preset; note its **name**.
+3. Put cloud name + preset name in `photos-config.js`.
+4. In Vercel project env vars add: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` (from the Cloudinary dashboard), then redeploy.
+Photos are tagged `burmeisters`; event/uploader/caption stored in Cloudinary "context".
+`/api/gallery` lists them grouped by event; `photos-local.js` holds always-on seed photos.
