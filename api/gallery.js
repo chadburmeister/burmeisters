@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
       const ver = rs.version ? `v${rs.version}/` : '';
       const photo = {
         url: rs.secure_url,
-        thumb: `${base}/c_fill,w_600,h_600,q_auto,f_auto/${ver}${rs.public_id}.${rs.format}`,
+        thumb: `${base}/c_limit,w_800,q_auto,f_auto/${ver}${rs.public_id}.${rs.format}`,
         big:   `${base}/c_limit,w_1600,h_1600,q_auto,f_auto/${ver}${rs.public_id}.${rs.format}`,
         w: rs.width || null, h: rs.height || null,
         caption: ctx.caption || '',

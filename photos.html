@@ -57,11 +57,11 @@
   .card .meta h3{font-family:var(--serif);font-size:20px;font-weight:600}
   .card .meta .yr{color:var(--muted);font-size:12.5px;margin-top:3px}
 
-  .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  @media(max-width:900px){.pgrid{grid-template-columns:repeat(3,1fr)}}
-  @media(max-width:560px){.pgrid{grid-template-columns:repeat(2,1fr)}}
-  .ph{position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#eee;cursor:zoom-in}
-  .ph img{transition:.3s}.ph:hover img{transform:scale(1.05)}
+  .pgrid{column-count:4;column-gap:10px}
+  @media(max-width:900px){.pgrid{column-count:3}}
+  @media(max-width:560px){.pgrid{column-count:2}}
+  .ph{position:relative;break-inside:avoid;margin:0 0 10px;border-radius:10px;overflow:hidden;background:#eee;cursor:zoom-in}
+  .ph img{width:100%;height:auto;display:block;transition:.3s}.ph:hover img{transform:scale(1.03)}
   .ph .badge{position:absolute;left:8px;bottom:8px;font-size:10.5px;color:#fff;background:rgba(0,0,0,.5);padding:3px 8px;border-radius:6px;backdrop-filter:blur(3px);max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
   .empty{text-align:center;color:var(--muted);padding:56px 20px;border:1px dashed var(--line);border-radius:16px;background:#fff}
@@ -241,7 +241,7 @@
       status.textContent = results.length ? `${results.length} photo${results.length>1?'s':''} matching “${$('#q').value.trim()}”` : '';
       if(!results.length){ empty.style.display='block'; empty.innerHTML='<h3>No matches</h3><p>Try a name, event, or year.</p>'; return; }
       renderPhotoGrid(results.map(r=>r.p), photos, results.map(r=>r.ev.title));
-      photos.style.display='grid'; return;
+      photos.style.display='block'; return;
     }
     if(current){
       status.textContent='';
@@ -249,7 +249,7 @@
       backbar.innerHTML = `<button id="back">&larr; All events</button><div><h2>${current.title}</h2><div class="sub">${current.date||''}${current.date?' · ':''}${(current.photos||[]).length} photos</div></div>`;
       backbar.querySelector('#back').addEventListener('click',()=>{ current=null; render(); });
       renderPhotoGrid(current.photos||[], photos, null);
-      photos.style.display='grid'; return;
+      photos.style.display='block'; return;
     }
     const total = EVENTS.reduce((n,e)=>n+((e.photos||[]).length),0);
     status.textContent = EVENTS.length ? `${EVENTS.length} event${EVENTS.length>1?'s':''} · ${total} photos` : '';
