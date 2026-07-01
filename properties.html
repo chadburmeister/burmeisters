@@ -203,8 +203,8 @@
       <div class="name">Glen Burmeister</div>
       <div class="role">General Partner</div>
       <div class="line"><span class="ic">&#128222;</span><a href="tel:+13039031005">303-903-1005</a></div>
-      <div class="line"><span class="ic">&#9993;</span><a href="mailto:gburmster@gmail.com?subject=Interested%20in%20Commercial%20Property%20in%20Castle%20Rock">gburmster@gmail.com</a></div>
-      <a class="btn" href="mailto:gburmster@gmail.com?subject=Interested%20in%20Commercial%20Property%20in%20Castle%20Rock">Email about this property</a>
+      <div class="line"><span class="ic">&#9993;</span><a href="mailto:accounting@burmeisters.com?subject=Interested%20in%20Commercial%20Property%20in%20Castle%20Rock">accounting@burmeisters.com</a></div>
+      <a class="btn" href="mailto:accounting@burmeisters.com?subject=Interested%20in%20Commercial%20Property%20in%20Castle%20Rock">Email about this property</a>
     </div>
   </div>
 </section>
@@ -223,7 +223,7 @@
   document.getElementById('menuBtn').addEventListener('click',()=>document.getElementById('links').classList.toggle('open'));
   const lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg');
   document.querySelectorAll('.gallery .g img').forEach(img=>{
-    img.addEventListener('click',()=>{ lbImg.src=img.src.replace(/w_1000,h_700/,'w_1600,h_1120'); lb.classList.add('show'); });
+    img.addEventListener('click',()=>{ lbImg.src=img.src; lb.classList.add('show'); });
   });
   lb.addEventListener('click',()=>lb.classList.remove('show'));
 </script>
