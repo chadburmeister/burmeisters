@@ -103,6 +103,13 @@
   .btn.ghost{background:#f1f1ef;color:#333}
   .notice{background:#fbf7ee;border:1px solid #eadfc4;color:#8a6d2f;font-size:13px;padding:12px 14px;border-radius:10px;margin-bottom:16px;line-height:1.5}
 
+  .manage-link{font-size:14px;color:#8a6d2f;background:#fff;border:1px solid var(--line);padding:13px 16px;border-radius:12px;cursor:pointer;white-space:nowrap}
+  .manage-link.on{background:#8a6d2f;color:#fff;border-color:#8a6d2f}
+  .ph .del{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(200,40,40,.95);color:#fff;font-size:15px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+  .card{position:relative}
+  .card .del{position:absolute;top:10px;left:10px;background:rgba(200,40,40,.95);color:#fff;border:0;border-radius:8px;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;z-index:3}
+  .delEvent{border:1px solid #d0453f;color:#d0453f;background:#fff;border-radius:10px;padding:9px 14px;font-size:13px;cursor:pointer}
+  .delEvent:hover{background:#fdeceb}
   footer{border-top:1px solid var(--line);background:#fff}
   .foot{max-width:1140px;margin:0 auto;padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
   .foot .c{color:var(--muted);font-size:12.5px}
@@ -138,6 +145,7 @@
     <button class="clr" id="clr" aria-label="Clear">&times;</button>
   </div>
   <button class="addbtn" id="addBtn">＋ Add photos</button>
+  <button class="manage-link" id="manageBtn">Manage</button>
 </div>
 
 <main class="wrap">
@@ -209,6 +217,8 @@
 
   let EVENTS = Array.isArray(window.LOCAL_EVENTS) ? window.LOCAL_EVENTS.slice() : [];
   let current = null, lightboxSet = [], lightboxIdx = 0;
+  let manage = false;
+  const adminPw = () => sessionStorage.getItem('burm_admin') || '';
 
   const thumbOf = p => p.thumb || p.url;
   const bigOf   = p => p.big || p.url;
@@ -248,6 +258,11 @@
       backbar.style.display='flex';
       backbar.innerHTML = `<button id="back">&larr; All events</button><div><h2>${current.title}</h2><div class="sub">${current.date||''}${current.date?' · ':''}${(current.photos||[]).length} photos</div></div>`;
       backbar.querySelector('#back').addEventListener('click',()=>{ current=null; render(); });
+      if(manage && current.source==='upload'){
+        const de=document.createElement('button'); de.className='delEvent'; de.textContent='Delete this event';
+        de.addEventListener('click',()=>deleteEvent(current));
+        backbar.appendChild(de);
+      }
       renderPhotoGrid(current.photos||[], photos, null);
       photos.style.display='block'; return;
     }
@@ -261,6 +276,11 @@
       card.innerHTML = `<div class="cov"><img loading="lazy" src="${cover}" alt="${ev.title}"><span class="cnt">${(ev.photos||[]).length} photos</span></div>
         <div class="meta"><h3>${ev.title}</h3><div class="yr">${ev.date||''}</div></div>`;
       card.addEventListener('click',()=>{ current=ev; window.scrollTo({top:0,behavior:'smooth'}); render(); });
+      if(manage && ev.source==='upload'){
+        const del=document.createElement('button'); del.className='del'; del.textContent='Delete event';
+        del.addEventListener('click',e=>{ e.stopPropagation(); deleteEvent(ev); });
+        card.appendChild(del);
+      }
       cards.appendChild(card);
     });
   }
@@ -271,6 +291,11 @@
       const d=document.createElement('div'); d.className='ph';
       d.innerHTML = `<img loading="lazy" src="${thumbOf(p)}" alt="${p.caption||''}">${badges?`<span class="badge">${badges[i]}</span>`:''}`;
       d.addEventListener('click',()=>openLightbox(list,i));
+      if(manage && p.public_id){
+        const del=document.createElement('button'); del.className='del'; del.innerHTML='&times;';
+        del.addEventListener('click',e=>{ e.stopPropagation(); deletePhoto(p); });
+        d.appendChild(del);
+      }
       container.appendChild(d);
     });
   }
@@ -369,6 +394,46 @@
     if(target){ current=target; render(); window.scrollTo({top:0,behavior:'smooth'}); }
     $('#uCancel').disabled=false;
   });
+
+  /* ---------- Admin manage / delete ---------- */
+  const manageBtn=$('#manageBtn');
+  manageBtn.addEventListener('click',()=>{
+    if(!manage){
+      let pw=adminPw();
+      if(!pw){ pw=prompt('Enter the admin password to manage photos:')||''; if(!pw) return; sessionStorage.setItem('burm_admin',pw); }
+      manage=true;
+    } else { manage=false; }
+    manageBtn.classList.toggle('on',manage);
+    manageBtn.textContent=manage?'Done':'Manage';
+    render();
+  });
+
+  async function apiDelete(payload){
+    const r=await fetch('/api/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({password:adminPw()},payload))});
+    let j={}; try{ j=await r.json(); }catch(e){}
+    if(r.status===401){ sessionStorage.removeItem('burm_admin'); manage=false; manageBtn.classList.remove('on'); manageBtn.textContent='Manage'; render(); alert('Wrong admin password.'); return {ok:false}; }
+    if(!j.ok) alert('Could not delete: '+(j.error||'unknown error'));
+    return j;
+  }
+
+  async function deletePhoto(p){
+    if(!confirm('Delete this photo? This cannot be undone.')) return;
+    const j=await apiDelete({action:'deletePhoto', public_id:p.public_id});
+    if(!j.ok) return;
+    EVENTS.forEach(ev=>{ ev.photos=(ev.photos||[]).filter(x=>x.public_id!==p.public_id); });
+    EVENTS=EVENTS.filter(ev=> ev.source!=='upload' || (ev.photos&&ev.photos.length));
+    if(current && !(current.photos&&current.photos.length)) current=null;
+    render();
+  }
+
+  async function deleteEvent(ev){
+    if(!confirm('Delete the entire “'+ev.title+'” event and all its photos? This cannot be undone.')) return;
+    const j=await apiDelete({action:'deleteEvent', tag:ev.id});
+    if(!j.ok) return;
+    EVENTS=EVENTS.filter(e=>e.id!==ev.id);
+    if(current && current.id===ev.id) current=null;
+    render();
+  }
 
   load();
 </script>
