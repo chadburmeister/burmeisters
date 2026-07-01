@@ -1,6 +1,6 @@
 // Lists uploaded family photos from Cloudinary (tag: burmeisters), grouped by event.
 // Requires Vercel env vars: CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET
-const CLOUD  = process.env.CLOUDINARY_CLOUD_NAME;
+const CLOUD  = process.env.CLOUDINARY_CLOUD_NAME || 'fpe4tef1';
 const KEY    = process.env.CLOUDINARY_API_KEY;
 const SECRET = process.env.CLOUDINARY_API_SECRET;
 const TAG = 'burmeisters';

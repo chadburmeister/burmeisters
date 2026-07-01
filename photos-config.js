@@ -1,6 +1,5 @@
-// Cloudinary client config (public values). Fill these in after creating your
-// free Cloudinary account and an UNSIGNED upload preset.
+// Cloudinary client config (public values).
 window.CLOUD = {
-  cloudName: "",      // e.g. "burmeisters"
-  uploadPreset: ""    // e.g. "family_uploads" (Unsigned)
+  cloudName: "fpe4tef1",
+  uploadPreset: "family_uploads"
 };
